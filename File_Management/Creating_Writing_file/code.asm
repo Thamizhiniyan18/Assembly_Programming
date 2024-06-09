@@ -7,7 +7,12 @@
 %endmacro
 
 section .data
-  pathname dd "/home/thamizhiniyan/Documents/Assembly_Programming/File_Management/file.txt"
+  pathname dd "/home/thamizhiniyan/Documents/Assembly_Programming/File_Management/Creating_Writing_file/file.txt"
+
+  ; Closing the file
+  mov ebx, eax                      ; File Descriptor (Response from writing the file)
+  mov eax, 6                        ; sys_close
+  int 0x80                          ; Kernel Interrupt
 
   file_content dd "Contents of the File is Written Successfully!!!!"
   file_content_length equ $- file_content
@@ -28,7 +33,7 @@ _start:
   ; Writing to the file
   mov edx, file_content_length      ; Length of the content buffer
   mov ecx, file_content             ; content
-  mov ebx, eax                      ; File descriptor
+  mov ebx, eax                      ; File descriptor (Response from creating the file)
   mov eax, 4                        ; sys_write
   int 0x80                          ; Kernel Interrupt
 
